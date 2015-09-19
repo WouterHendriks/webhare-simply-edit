@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="http://www.webhare.net/xmlns/system/moduledefinition">
+
+  <meta>
+    <version>0.1</version>
+    <description>WHExample</description>
+    <author>B-Lex IT BV</author>
+    <copyright>B-Lex IT BV</copyright>
+    <packaging download="true">
+    </packaging>
+  </meta>
+</module>
