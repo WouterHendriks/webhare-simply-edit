@@ -11,4 +11,5 @@ from trying to push it. If you need to submit modifications to the whexample_sit
 module, you'll need to readd the git remote - execute this in the root of the
 module:
 
-`git remote add origin git@gitlab.b-lex.com/webhare.net/whexample_site.git`
+```git remote add origin git@gitlab.b-lex.com:webhare.net/whexample_site.git
+git push -u origin master```
