@@ -5,8 +5,12 @@
     <version>0.1</version>
     <description>WHExample</description>
     <author>B-Lex IT BV</author>
-    <copyright>B-Lex IT BV</copyright>
+    <copyright>Public domain/CC0</copyright>
     <packaging download="true">
     </packaging>
   </meta>
+
+  <publisher>
+    <webdesign name="first" title="First example webdesign" siteprofile="first.siteprl"/>
+  </publisher>
 </module>

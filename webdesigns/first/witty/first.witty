@@ -1,0 +1,15 @@
+[component htmlhead]
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Realisatie: B-Lex IT B.V.
+                   http://www.b-lex.nl/ -->
+
+[/component]
+
+[component htmlbody]
+  <header>
+    <img id="logo" src="[imgroot]logo.png" alt="Example" />
+  </header>
+  <main>
+    [contents]
+  </main>
+[/component]
