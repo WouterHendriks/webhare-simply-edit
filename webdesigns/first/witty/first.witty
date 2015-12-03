@@ -1,15 +1,157 @@
 [component htmlhead]
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Realisatie: B-Lex IT B.V.
-                   http://www.b-lex.nl/ -->
 
+  [! http://ylebre.github.io/simply-edit/cms-integration.html 
+
+    <script>
+      var myCustomStorage = {
+        init : function(endpoint) {
+          this.endpoint = endpoint;
+        },
+        save : function(data, callback) {
+          localStorage.simplyData = data;
+          callback();
+        },
+        load : function(callback) {
+          if (!localStorage.simplyData) {
+            localStorage.simplyData = "{}";
+          }
+          callback(localStorage.simplyData);
+        },
+        connect : function() {
+          return true;
+        },
+        disconnect : function() {
+          return true;
+        },
+        list : function(url, callback) {
+          var result = {
+            folders : [
+              {
+                url : "http://endpoint.com/folder1/",
+                name : "Folder 1"
+              },
+              {
+                url : "http://endpoint.com/folder2/",
+                name : "Folder 2"
+              }
+            ],
+            files : [
+              {
+                url : "http://endpoint.com/myfile.txt",
+                name : "myfile.txt"
+              },
+              {
+                url : "http://endpoint.com/myfile2.txt",
+                name : "myfile2.txt"  
+              },
+              {
+                url : "http://endpoint.com/myfile3.txt",
+                name : "myfile3.txt"
+              },
+              {
+                url : "http://endpoint.com/image1.png",
+                name : "image1.png"
+              },
+              {
+                url : "http://endpoint.com/image2.png",
+                name : "image2.png"
+              }
+            ],
+            images : [
+              {
+                url : "http://endpoint.com/image1.png",
+                name : "image1.png"
+              },
+              {
+                url : "http://endpoint.com/image2.png",
+                name : "image2.png"
+              }
+            ]
+          };
+          callback(result);
+        }
+      };
+
+      var textSettings = {
+        'block' : [
+          {tag : 'h1', name : 'Heading 1'},
+          {tag : 'h2', name : 'Heading 2'},
+          {tag : 'p', name : 'Paragraph'},
+        ],
+        'inline' : [
+          {tag : 'strong', name : 'Bold', icon : 'fa-bold'},
+          {tag : 'em', name : 'Italic', icon : 'fa-italic'},
+          {tag : 'code', name : 'Code', icon : 'fa-code'}
+        ],
+        'class' : [
+          [
+            {class : 'highlight', name : 'Highlight', icon : 'fa-sun-o'},
+            {class : 'lowlight', name : 'Lowlight', icon : 'fa-moon-o'}
+          ],
+          [
+            {class : 'red', name : 'Red', icon : 'fa-paint-brush'},
+            {class : 'green', name : 'Green', icon : 'fa-paint-brush'},
+            {class : 'blue', name : 'Blue', icon : 'fa-paint-brush'},
+          ]
+        ]
+      };
+
+      var templateSettings = {
+        'templates' : [
+          {name : "Hoofdpagina", template : "index.html"},
+          {name : "RSS", template : "rss.html"}
+        ]
+      };
+
+      var imageSettings = {
+        'images' : [
+          {name : "Klein", value : "$1/view.thumb.jpg"},
+          {name : "Middel", value : "$1/view.medium.jpg"},
+          {name : "Groot", value : "$1/view.large.jpg"}
+        ],
+        'class' : [
+          [
+            {class : 'shadow', name : 'Shadow', icon : 'fa-moon-o'}
+          ]
+        ]
+      };
+      var myCustomSettings = {
+        'simply-text-cursor': textSettings,
+        'simply-text-selection' : textSettings,
+        'pageTemplates' : templateSettings,
+        'simply-image' : imageSettings
+      };
+
+
+    </script>
+    <script src="/simply-edit/js/simply-edit.js" 
+      data-api-key="muze"
+      data-simply-images="images"
+      data-simply-storage="myCustomStorage"
+      data-simply-settings="myCustomSettings"
+    ></script>
+     
+  !]
 [/component]
 
 [component htmlbody]
   <header>
     <img id="logo" src="[imgroot]logo.png" alt="Example" />
   </header>
+
   <main>
-    [contents]
+    <h1 class="heading1" data-simply-field="heading">Lorum ipsum dolor sit amet</h1>
+    <p class="normal">Quisque rutrum. Praesent vestibulum dapibus nibh. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.. Nunc interdum lacus sit amet orci.<br /></p>
+    <p class="normal">Aenean imperdiet. Aliquam eu nunc. Suspendisse potenti. Phasellus accumsan cursus velit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.</p>
+    <p class="normal">Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Vestibulum rutrum, mi nec elementum vehicula, eros quam gravida nisl, id fringilla neque ante vel mi. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Vivamus in erat ut urna cursus vestibulum. Maecenas vestibulum mollis diam.</p>
+    <p class="normal"><img class="wh-rtd-img wh-rtd-floatright -wh-rtd-floatright floatright" src="/.system/dl/ic~AQILUwEAni87BHw6CwDpLugDBwHEWgBMAIA6ogU" alt="" width="90" height="76" /></p>
+    <p class="normal">Sed magna purus, fermentum eu, tincidunt eu, varius ut, felis. Fusce commodo aliquam arcu. Vivamus euismod mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci. In auctor lobortis lacus.</p>
   </main>
+
+  <script src="https://beta.simplyedit.io/0/simply-edit.js" 
+          data-simply-endpoint="[siteroot]" 
+          data-api-key="localhost"
+          ></script>
+
 [/component]
