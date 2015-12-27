@@ -3,14 +3,20 @@
 
   <meta>
     <version>0.1</version>
-    <description>WHExample</description>
-    <author>B-Lex IT BV</author>
-    <copyright>Public domain/CC0</copyright>
+    <description>WebHare simply edit</description>
     <packaging download="true">
     </packaging>
   </meta>
 
+  <backend>
+    <webrule path="allroots:/.webhare-simply-edit/" match="initial" redirecttoscript="web:/simplyedit.shtml" allowallmethods="true"/>
+  </backend>
+
+  <filesystem>
+    <siteprofile datafile="siteprofile.xml"/>
+  </filesystem>
+
   <publisher>
-    <webdesign name="first" title="First example webdesign" siteprofile="first.siteprl"/>
+    <webdesign name="first" title="Simplyedit webdesign" siteprofile="first.siteprl"/>
   </publisher>
 </module>

@@ -1,4 +1,4 @@
-require ('../css/first.scss');
+require ('../css/first.css');
 
 function init()
 {

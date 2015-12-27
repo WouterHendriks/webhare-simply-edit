@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<siteprofile
+   xmlns="http://www.webhare.net/xmlns/publisher/siteprofile"
+   xmlns:p="http://www.webhare.net/xmlns/publisher/components"
+   xmlns:t="http://www.webhare.net/xmlns/tollium/screens">
+
+  <contenttype namespace="http://www.webhare.net/xmlns/webhare-simply-edit/storage">
+    <member name="rawdata" type="file" />
+  </contenttype>
+</siteprofile>

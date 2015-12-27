@@ -1,7 +1,7 @@
 [component htmlhead]
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  [! http://ylebre.github.io/simply-edit/cms-integration.html 
+  [! http://ylebre.github.io/simply-edit/cms-integration.html
 
     <script>
       var myCustomStorage = {
@@ -43,7 +43,7 @@
               },
               {
                 url : "http://endpoint.com/myfile2.txt",
-                name : "myfile2.txt"  
+                name : "myfile2.txt"
               },
               {
                 url : "http://endpoint.com/myfile3.txt",
@@ -125,13 +125,13 @@
 
 
     </script>
-    <script src="/simply-edit/js/simply-edit.js" 
+    <script src="/simply-edit/js/simply-edit.js"
       data-api-key="muze"
       data-simply-images="images"
       data-simply-storage="myCustomStorage"
       data-simply-settings="myCustomSettings"
     ></script>
-     
+
   !]
 [/component]
 
@@ -149,8 +149,8 @@
     <p class="normal">Sed magna purus, fermentum eu, tincidunt eu, varius ut, felis. Fusce commodo aliquam arcu. Vivamus euismod mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci. In auctor lobortis lacus.</p>
   </main>
 
-  <script src="https://beta.simplyedit.io/0/simply-edit.js" 
-          data-simply-endpoint="[siteroot]" 
+  <script src="https://beta.simplyedit.io/0/simply-edit.js"
+          data-simply-endpoint="/.webhare-simply-edit/?url=[baseurl]&amp;"
           data-api-key="localhost"
           ></script>
 

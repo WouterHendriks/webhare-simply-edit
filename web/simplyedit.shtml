@@ -1,0 +1,99 @@
+<?wh
+LOADLIB "wh::files.whlib";
+LOADLIB "module::publisher/publisher.whlib";
+LOADLIB "module::system/cache.whlib";
+LOADLIB "module::system/database.whlib";
+LOADLIB "module::system/webserver.whlib";
+LOADLIB "module::system/whfs.whlib";
+
+/* Our simply edit integration:
+
+  It's integrated into a page using:
+
+   <script src="https://beta.simplyedit.io/0/simply-edit.js"
+        data-simply-endpoint="[ENDPOINT]"
+        data-api-key="localhost"
+        ></script>
+
+  Note that that api-key only works for http://localhost:XXX/ urls so that's
+  what you'll have to work with while testing this.
+
+  As far as we can tell, it blindly appends 'data/data.json' to whatever endpoint
+  you give it, and it's POST data gives no hint as to which URL we're editing.
+  So we'll just work with:
+
+  <script src="https://beta.simplyedit.io/0/simply-edit.js"
+          data-simply-endpoint="/.webhare-simply-edit/?url=[baseurl]&amp;"
+          data-api-key="localhost"
+          ></script>
+
+  Other issues:
+  - user verification (allowed to write ?)
+  - the module doesn't verify that the site is actually managed by simplyedit,
+    so it's just a big storage engine
+  - a nicer implementation probably moves some fields to file.title etc instead
+    of directly storing them, but we can't do such a thing by default as the
+    fields may be filling with HTML data, which file.title doesn't normally
+    accept. a better implementation won't get away without defining a mapping
+    'store these simplyedit fields there, let the rest be'
+*/
+
+RECORD FUNCTION GetSimplyEditData(STRING url)
+{
+  STRING result;
+
+  OBJECT trans := OpenPrimary();
+  RECORD target := LookupPublisherURL(url);
+  IF(target.file != 0)
+  {
+    OBJECT storagetype := OpenWHFSType("http://www.webhare.net/xmlns/webhare-simply-edit/storage");
+    RECORD data := storagetype->GetInstancedata(target.file);
+    IF(RecordExists(data.rawdata))
+      result := BlobToString(data.rawdata.data);
+    ELSE
+      result := "{}";
+  }
+  trans->Close();
+          //only store long term if we had a cache hit
+  RETURN [ ttl := target.file != 0 ? 5 * 60 * 1000 : 5 * 1000
+         , value := [ hitfile := target.file != 0
+                    , result := result
+                    ]
+         , eventmasks := [ "system:whfs.folder." || target.folder ]
+         ];
+}
+
+STRING url := GetWebVariable("url");
+
+IF(GetRequestMethod()="GET" OR GetRequestMethod()="HEAD")
+{
+  RECORD datatoserve := GetAdhocCached([ url := url], PTR GetSimplyEditData(url));
+  AddHTTPHeader("Content-Type","application/json", FALSE);
+  IF(datatoserve.hitfile)
+  {
+    //ADDME set up cacheable headers
+  }
+  Print(datatoserve.result);
+  RETURN;
+}
+
+IF(GetRequestMethod()="PUT")
+{
+  OBJECT trans := OpenPrimary();
+  trans->BeginWork();
+
+  RECORD target := LookupPublisherURL(url);
+  IF(target.file = 0)
+    THROW NEW Exception("URL does not refer to a file");
+
+  //FIXME check edit access
+  OBJECT storagetype := OpenWHFSType("http://www.webhare.net/xmlns/webhare-simply-edit/storage");
+  storagetype->SetInstanceData(target.file, [ rawdata := WrapBlob(GetRequestBody(),'rawdata.json') ] );
+  OpenWHFSObject(target.file)->UpdateMetadata(DEFAULT RECORD); //trigger filestamp updates/cache flush
+  trans->CommitWork();
+  trans->Close();
+  //AddHTTPHeader("Status", "201 Created", FALSE);
+  RETURN;
+}
+
+AddHTTPHeader("Status", "405 Bad method for simplyedit URL", FALSE);
